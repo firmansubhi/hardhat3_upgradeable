@@ -5,9 +5,12 @@ npx hardhat --init
 	pilih hardhat3 -> mocha-ethers
 npm i -D @nomicfoundation/hardhat-ethers @nomicfoundation/hardhat-verify
 npm i @openzeppelin/contracts dotenv
+npm install @openzeppelin/contracts-upgradeable
+
+npx hardhat clean && npx hardhat compile
 
 deploy:
-npx hardhat ignition deploy ignition/modules/ProxyModule.ts --network localhost
+npx hardhat ignition deploy ignition/modules/ProxyModuleCoin.ts --network localhost
 
 upgrade:
 npx hardhat run scripts/upgrade.ts --network localhost
