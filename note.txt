@@ -1,0 +1,13 @@
+https://www.quicknode.com/guides/ethereum-development/smart-contracts/how-to-create-and-deploy-an-upgradeable-smart-contract-using-openzeppelin-and-hardhat
+
+npm init -y
+npx hardhat --init
+	pilih hardhat3 -> mocha-ethers
+npm i -D @nomicfoundation/hardhat-ethers @nomicfoundation/hardhat-verify
+npm i @openzeppelin/contracts dotenv
+
+deploy:
+npx hardhat ignition deploy ignition/modules/ProxyModule.ts --network localhost
+
+upgrade:
+npx hardhat run scripts/upgrade.ts --network localhost
