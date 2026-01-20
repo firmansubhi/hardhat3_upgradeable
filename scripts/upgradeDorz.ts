@@ -8,9 +8,9 @@ async function main() {
     const [currentAccount] = await ethers.getSigners();
     console.log("Current account:", currentAccount.address);
 
-    const proxy = "0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8";
-    const proxyAdmin = "0x402FB5eeB68a61575413359431433103F3F386CB";
-    const v2Implementation = "0xC92B72ecf468D2642992b195bea99F9B9BB4A838";
+    const proxy = "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE";
+    const proxyAdmin = "0x2b961E3959b79326A8e7F64Ef0d2d825707669b5";
+    const v2Implementation = "0x4A679253410272dd5232B3Ff7cF5dbB88f295319";
 
     const proxyAdminContract = await ethers.getContractAt("ProxyAdmin", proxyAdmin);
     const v2 = await ethers.getContractAt("Dorz2", v2Implementation);

@@ -1,6 +1,0 @@
-[
-  "function decrease()",
-  "function increase()",
-  "function initialValue(uint256)",
-  "function number() view returns (uint256)"
-]

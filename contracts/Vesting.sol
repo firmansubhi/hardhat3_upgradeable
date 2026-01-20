@@ -3,35 +3,68 @@ pragma solidity ^0.8.28;
 
 import "./Dorz.sol";
 
-import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+//import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 //import "@openzeppelin/contracts/utils/Strings.sol";
 //import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
-contract Vesting is OwnableUpgradeable {
-    Dorz myToken;
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {UUPSUpgradeable} from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
 
-    address private ownerAddress;
+// Assuming IProxyContract interface or the full contract is imported
+// import "./Dorz.sol";
+
+contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+    Dorz public myToken;
+
     AggregatorV3Interface internal dataFeed;
 
     //price simulation for USD & ETH for testing
-    int256 usdEthPrice = 1000 * 10 ** 8; // 1 eth = 1000 usd
-    int256 myCoinUsdPrice = 100 * 10 ** 8; // 1 usd = 100 dorz
+    int256 public usdEthPrice;
+    int256 public myCoinUsdPrice;
 
     //20% = 2000 basis points
-    int256 APR_RATE = 2000;
+    int256 public APR_RATE;
+
+    //variable to store the increment value of the vesting order
+    uint256 public dataIncrement;
 
     receive() external payable {}
 
-    constructor(address tokenAddress) {
-        myToken = Dorz(tokenAddress);
-        ownerAddress = msg.sender;
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize(
+        address dorzProxy,
+        address EthtoUsd
+    ) public initializer {
+        __Ownable_init(msg.sender);
+
+        usdEthPrice = 1000 * 10 ** 8; // 1 eth = 1000 usd
+        myCoinUsdPrice = 100 * 10 ** 8; // 1 usd = 100 dorz
+        APR_RATE = 2000;
+        dataIncrement = 0;
 
         //address chainlink for get ETH to USD price
-        dataFeed = AggregatorV3Interface(
-            0x694AA1769357215DE4FAC081bf1f309aDC325306
-        );
+        dataFeed = AggregatorV3Interface(EthtoUsd);
+
+        myToken = Dorz(dorzProxy);
     }
+
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyOwner {}
+
+    //constructor(address tokenAddress) {
+    //    myToken = Dorz(tokenAddress);
+
+    //    //address chainlink for get ETH to USD price
+    //    dataFeed = AggregatorV3Interface(
+    //        0x694AA1769357215DE4FAC081bf1f309aDC325306
+    //    );
+    //}
 
     /**
      * @notice Allow the owner of the contract to withdraw ETH
@@ -56,9 +89,6 @@ contract Vesting is OwnableUpgradeable {
         uint256 ownerBalance = address(this).balance;
         return ownerBalance;
     }
-
-    //variable to store the increment value of the vesting order
-    uint256 public dataIncrement = 0;
 
     struct Vest {
         address userAddress;
