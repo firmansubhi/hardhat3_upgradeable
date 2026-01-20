@@ -1,35 +1,35 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-const proxyModule = buildModule("ProxyModule", (m) => {
+
+const proxyModule = buildModule("proxyModule", (m) => {
   const proxyAdminOwner = m.getAccount(0);
 
-  const v1 = m.contract("V1");
-  const v2 = m.contract("V2");
+  const coin = m.contract("Dorz");
 
   const proxy = m.contract("TransparentUpgradeableProxy", [
-    v1,
-    proxyAdminOwner,
-    "0x",
+	coin,
+	proxyAdminOwner,
+	"0x",
   ]);
 
   const proxyAdminAddress = m.readEventArgument(
-    proxy,
-    "AdminChanged",
-    "newAdmin"
+	proxy,
+	"AdminChanged",
+	"newAdmin"
   );
 
   const proxyAdmin = m.contractAt("ProxyAdmin", proxyAdminAddress);
 
-  return { implementation: v1, proxyAdmin, proxy };
+  return { implementation: coin, proxyAdmin, proxy };
 });
 
-const v1Module = buildModule("V1Module", (m) => {
+const coinModule =  buildModule("CoinModule", (m) => {
   const { implementation, proxy, proxyAdmin } = m.useModule(proxyModule);
 
-  const v1 = m.contractAt("V1", proxy);
-  m.call(v1, "initialValue", [10]);
+  const coin = m.contractAt("Dorz", proxy);
+  m.call(coin, "initialize", [1]);
 
-  return { implementation, v1, proxy, proxyAdmin };
+  return { implementation, coin, proxy, proxyAdmin };
 });
 
-export default v1Module;
+export default coinModule;

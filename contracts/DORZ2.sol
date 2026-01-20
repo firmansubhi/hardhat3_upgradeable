@@ -7,7 +7,7 @@ import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Ini
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import {UUPSUpgradeable} from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
 
-contract DORZ is
+contract Dorz2 is
     Initializable,
     ERC20Upgradeable,
     OwnableUpgradeable,
@@ -18,19 +18,34 @@ contract DORZ is
         _disableInitializers();
     }
 
-    function initialize() public initializer {
+    uint256 public upgradeIncrement;
+
+    function initialize(uint _num) public initializer {
         __ERC20_init("DORZ", "DORZ");
         __Ownable_init(msg.sender);
 
         _mint(msg.sender, 1000_000_000 * 10 ** decimals());
+        upgradeIncrement = _num;
     }
 
     function _authorizeUpgrade(
         address newImplementation
     ) internal override onlyOwner {}
 
+    function version() public pure returns (string memory) {
+        return "2.0.0";
+    }
+
     function vdAddress() public view returns (address tokenAmount) {
         address ownerBalance = address(this);
         return ownerBalance;
+    }
+
+    function naik() external {
+        upgradeIncrement += 1;
+    }
+
+    function getNaik() public view returns (uint256 angka) {
+        return upgradeIncrement;
     }
 }

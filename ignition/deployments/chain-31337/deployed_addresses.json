@@ -1,6 +1,7 @@
 {
-  "proxyModuleCoin#DORZ": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-  "proxyModuleCoin#TransparentUpgradeableProxy": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-  "proxyModuleCoin#ProxyAdmin": "0xCafac3dD18aC6c6e92c921884f9E4176737C052c",
-  "CoinModule#DORZ": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  "proxyModule#DORZ": "0x40bde52e6B80Ae11F34C58c14E1E7fE1f9c834C4",
+  "proxyModule#TransparentUpgradeableProxy": "0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8",
+  "proxyModule#ProxyAdmin": "0x402FB5eeB68a61575413359431433103F3F386CB",
+  "CoinModule#DORZ": "0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8",
+  "Dorz2Module#DORZ2": "0xC92B72ecf468D2642992b195bea99F9B9BB4A838"
 }

@@ -10,7 +10,27 @@ npm install @openzeppelin/contracts-upgradeable
 npx hardhat clean && npx hardhat compile
 
 deploy:
-npx hardhat ignition deploy ignition/modules/ProxyModuleCoin.ts --network localhost
+npx hardhat ignition deploy ignition/modules/ProxyModule.ts --network localhost
+
+npx hardhat ignition deploy ignition/modules/dorz2.ts --network localhost
 
 upgrade:
-npx hardhat run scripts/upgrade.ts --network localhost
+npx hardhat run scripts/upgradeCoin.ts --network localhost
+
+
+
+
+Deployed Addresses
+
+
+proxyModule#DORZ - 0x40bde52e6B80Ae11F34C58c14E1E7fE1f9c834C4
+proxyModule#TransparentUpgradeableProxy - 0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8
+proxyModule#ProxyAdmin - 0x402FB5eeB68a61575413359431433103F3F386CB
+CoinModule#DORZ - 0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8
+
+
+proxyModule#DORZ - 0x40bde52e6B80Ae11F34C58c14E1E7fE1f9c834C4
+proxyModule#TransparentUpgradeableProxy - 0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8
+proxyModule#ProxyAdmin - 0x402FB5eeB68a61575413359431433103F3F386CB
+CoinModule#DORZ - 0xE9061F92bA9A3D9ef3f4eb8456ac9E552B3Ff5C8
+Dorz2Module#DORZ2 - 0xC92B72ecf468D2642992b195bea99F9B9BB4A838

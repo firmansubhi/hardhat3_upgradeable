@@ -1,10 +1,11 @@
 import hardhatToolboxMochaEthersPlugin from "@nomicfoundation/hardhat-toolbox-mocha-ethers";
 import { configVariable, defineConfig } from "hardhat/config";
+import hardhatAbiExporter from "@solidstate/hardhat-abi-exporter";
 
 import 'dotenv/config';
 
 export default defineConfig({
-  plugins: [hardhatToolboxMochaEthersPlugin],
+  plugins: [hardhatToolboxMochaEthersPlugin, hardhatAbiExporter],
   solidity: {
     profiles: {
       default: {
@@ -42,5 +43,15 @@ export default defineConfig({
       url: configVariable("LOCAL_URL"),
       accounts: [configVariable("LOCAL_PRIVATE_KEY")],
     },
+  },
+  abiExporter: {
+    path: './abi',
+	runOnCompile: true,
+	clear: true,
+	flat: true,
+	//only: ["Othree","Vesting", "Kepleng"],
+	//spacing: 2,
+	//pretty: true,
+	format: "minimal",
   },
 });
