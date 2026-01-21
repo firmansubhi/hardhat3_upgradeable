@@ -7,6 +7,10 @@ import 'dotenv/config';
 export default defineConfig({
   plugins: [hardhatToolboxMochaEthersPlugin, hardhatAbiExporter],
   solidity: {
+	npmFilesToBuild: [
+      "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol",
+      "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+    ],
     profiles: {
       default: {
         version: "0.8.28",

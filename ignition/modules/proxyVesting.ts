@@ -6,35 +6,35 @@ const proxyVesting = buildModule("ProxyVesting", (m) => {
 
   const vesting = m.contract("Vesting");
 
-  const proxy = m.contract("TransparentUpgradeableProxy", [
+  const proxyVest = m.contract("TransparentUpgradeableProxy", [
 	vesting,
 	proxyAdminOwner,
 	"0x",
   ]);
 
   const proxyAdminAddress = m.readEventArgument(
-	proxy,
+	proxyVest,
 	"AdminChanged",
 	"newAdmin"
   );
 
-  const proxyAdmin = m.contractAt("ProxyAdmin", proxyAdminAddress);
+  const proxyAdminVest = m.contractAt("ProxyAdmin", proxyAdminAddress);
 
-  return { implementation: vesting, proxyAdmin, proxy };
+  return { implementation: vesting, proxyAdminVest, proxyVest };
 });
 
 const vestingModule =  buildModule("VestingModule", (m) => {
-  const { implementation, proxy, proxyAdmin } = m.useModule(proxyVesting);
+  const { implementation, proxyVest, proxyAdminVest } = m.useModule(proxyVesting);
 
-  const vesting = m.contractAt("Vesting", proxy);
+  const vesting = m.contractAt("Vesting", proxyVest);
 
-  const dorzProxy = "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE";
+  const dorzProxy = "0xb11f9b33ee93B1f990a805fa68817A74e82A6891";
   const EthtoUsd = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
 
 
   m.call(vesting, "initialize", [dorzProxy, EthtoUsd]);
 
-  return { implementation, vesting, proxy, proxyAdmin };
+  return { implementation, vesting, proxyVest, proxyAdminVest };
 });
 
 export default vestingModule;

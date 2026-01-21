@@ -1,7 +1,7 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 
-const proxyModule = buildModule("proxyModule", (m) => {
+const proxyDorzModule = buildModule("ProxyDorzModule", (m) => {
   const proxyAdminOwner = m.getAccount(0);
 
   const dorz = m.contract("Dorz");
@@ -20,16 +20,16 @@ const proxyModule = buildModule("proxyModule", (m) => {
 
   const proxyAdmin = m.contractAt("ProxyAdmin", proxyAdminAddress);
 
-  return { implementation: dorz, proxyAdmin, proxy };
+  return { proxyAdmin, proxy };
 });
 
-const dorzModule =  buildModule("CoinModule", (m) => {
-  const { implementation, proxy, proxyAdmin } = m.useModule(proxyModule);
+const dorzModule =  buildModule("DorzModule", (m) => {
+  const { proxy, proxyAdmin } = m.useModule(proxyDorzModule);
 
   const dorz = m.contractAt("Dorz", proxy);
-  m.call(dorz, "initialize", [1]);
+  m.call(dorz, "initialize", []);
 
-  return { implementation, dorz, proxy, proxyAdmin };
+  return { dorz, proxy, proxyAdmin };
 });
 
 export default dorzModule;

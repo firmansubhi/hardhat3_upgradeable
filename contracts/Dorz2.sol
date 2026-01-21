@@ -20,12 +20,11 @@ contract Dorz2 is
 
     uint256 public upgradeIncrement;
 
-    function initialize(uint _num) public initializer {
+    function initialize() public initializer {
         __ERC20_init("DORZ", "DORZ");
         __Ownable_init(msg.sender);
 
         _mint(msg.sender, 1000_000_000 * 10 ** decimals());
-        upgradeIncrement = _num;
     }
 
     function _authorizeUpgrade(

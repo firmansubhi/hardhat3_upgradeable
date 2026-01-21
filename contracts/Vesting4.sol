@@ -15,7 +15,7 @@ import {UUPSUpgradeable} from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeab
 // Assuming IProxyContract interface or the full contract is imported
 // import "./Dorz.sol";
 
-contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+contract Vesting4 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     Dorz public myToken;
 
     AggregatorV3Interface internal dataFeed;
@@ -181,7 +181,7 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         int256 val = int256(msg.value);
         (int256 amount, int256 apr) = getUSDAmount(val);
-        uint256 lockUpTime = block.timestamp + 365 days;
+        uint256 lockUpTime = block.timestamp - 1 days;
         uint256 claimTime;
         uint256 coinClaimed;
 
@@ -291,6 +291,18 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     }
 
     function version() public pure returns (string memory) {
-        return "1.0";
+        return "2.0";
+    }
+
+    function naik() external {
+        APR_RATE += 1000;
+    }
+
+    function naik2() external {
+        APR_RATE += 1000;
+    }
+
+    function turun() external {
+        APR_RATE -= 500;
     }
 }

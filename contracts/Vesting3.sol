@@ -15,7 +15,7 @@ import {UUPSUpgradeable} from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeab
 // Assuming IProxyContract interface or the full contract is imported
 // import "./Dorz.sol";
 
-contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+contract Vesting3 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     Dorz public myToken;
 
     AggregatorV3Interface internal dataFeed;
@@ -291,6 +291,14 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     }
 
     function version() public pure returns (string memory) {
-        return "1.0";
+        return "2.0";
+    }
+
+    function naik() external {
+        APR_RATE += 1000;
+    }
+
+    function naik2() external {
+        APR_RATE += 1000;
     }
 }

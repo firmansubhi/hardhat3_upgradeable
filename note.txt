@@ -10,37 +10,42 @@ npm install @openzeppelin/contracts-upgradeable
 npx hardhat clean && npx hardhat compile
 
 deploy:
-npx hardhat ignition deploy ignition/modules/ProxyModule.ts --network localhost
+npx hardhat ignition deploy ignition/modules/proxyDorz.ts --network localhost
 
 npx hardhat ignition deploy ignition/modules/dorz2.ts --network localhost
 
 npx hardhat ignition deploy ignition/modules/ProxyVesting.ts --network localhost
 
+
+
 upgrade:
 npx hardhat run scripts/upgradeDorz.ts --network localhost
+
+deploy + upgrade: (change ProxyVesting2 to next number)
+npx hardhat ignition deploy ignition/modules/upgradeVesting.ts --network localhost
 
 
 
 
 Deployed Addresses
 
-proxyModule#Dorz - 0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1
-proxyModule#TransparentUpgradeableProxy - 0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE
-proxyModule#ProxyAdmin - 0x2b961E3959b79326A8e7F64Ef0d2d825707669b5
-CoinModule#Dorz - 0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE
-ProxyVesting#Vesting - 0x3Aa5ebB10DC797CAC828524e59A333d0A371443c
-ProxyVesting#TransparentUpgradeableProxy - 0xc6e7DF5E7b4f2A278906862b61205850344D4e7d
-ProxyVesting#ProxyAdmin - 0x553BED26A78b94862e53945941e4ad6E4F2497da
-VestingModule#Vesting - 0xc6e7DF5E7b4f2A278906862b61205850344D4e7d
+ProxyDorzModule#Dorz - 0x5a8E771b5D0B3d2e4d218478CB7C9029d00c4e5a
+ProxyDorzModule#TransparentUpgradeableProxy - 0xb11f9b33ee93B1f990a805fa68817A74e82A6891
+ProxyDorzModule#ProxyAdmin - 0x71535B5662df5B31f98a68B292707fDcf35b9F48
+DorzModule#Dorz - 0xb11f9b33ee93B1f990a805fa68817A74e82A6891
 
+ProxyVesting#Vesting - 0x9A7848b9E60C7619f162880c7CA5Cbca80998034
+ProxyVesting#TransparentUpgradeableProxy - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
+ProxyVesting#ProxyAdmin - 0x8b78072314017404e07eE2A026C796E278638c27
+VestingModule#Vesting - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
 
+DemoV2Module#Vesting2 - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
+Vesting2Module#Vesting2 - 0x322619fcCcc741880ee7071cBE4e877Fb919eCf8
 
-proxyModule#Dorz - 0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1
-proxyModule#TransparentUpgradeableProxy - 0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE
-proxyModule#ProxyAdmin - 0x2b961E3959b79326A8e7F64Ef0d2d825707669b5
-CoinModule#Dorz - 0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE
-ProxyVesting#Vesting - 0x3Aa5ebB10DC797CAC828524e59A333d0A371443c
-ProxyVesting#TransparentUpgradeableProxy - 0xc6e7DF5E7b4f2A278906862b61205850344D4e7d
-ProxyVesting#ProxyAdmin - 0x553BED26A78b94862e53945941e4ad6E4F2497da
-VestingModule#Vesting - 0xc6e7DF5E7b4f2A278906862b61205850344D4e7d
-Dorz2Module#Dorz2 - 0x4A679253410272dd5232B3Ff7cF5dbB88f295319
+DemoV3Module#Vesting3 - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
+Vesting3Module#Vesting3 - 0xBF4fD550c7BD3Cf6eC6A0b30bD4c8e603bbC16a8
+
+Dorz2Module#Dorz2 - 0xCfaa0489f27b8A6980DeA5134f32516c755B7e63
+
+ProxyVesting4#Vesting4 - 0xEDBA386C67364084c5eCbb4C50422eEDCfB19374
+Vesting4Module#Vesting4 - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
