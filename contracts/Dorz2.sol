@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Compatible with OpenZeppelin Contracts ^5.5.0
-pragma solidity ^0.8.27;
+pragma solidity ^0.8.28;
 
 import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -17,8 +16,6 @@ contract Dorz2 is
     constructor() {
         _disableInitializers();
     }
-
-    uint256 public upgradeIncrement;
 
     function initialize() public initializer {
         __ERC20_init("DORZ", "DORZ");
@@ -38,13 +35,5 @@ contract Dorz2 is
     function vdAddress() public view returns (address tokenAmount) {
         address ownerBalance = address(this);
         return ownerBalance;
-    }
-
-    function naik() external {
-        upgradeIncrement += 1;
-    }
-
-    function getNaik() public view returns (uint256 angka) {
-        return upgradeIncrement;
     }
 }

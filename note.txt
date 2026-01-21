@@ -11,12 +11,13 @@ npx hardhat clean && npx hardhat compile
 
 deploy:
 npx hardhat ignition deploy ignition/modules/proxyDorz.ts --network localhost
+npx hardhat ignition deploy ignition/modules/ProxyVesting.ts --network localhost
 
 npx hardhat ignition deploy ignition/modules/dorz2.ts --network localhost
 
-npx hardhat ignition deploy ignition/modules/ProxyVesting.ts --network localhost
-
-
+upgrade:
+npx hardhat ignition deploy ignition/modules/upgradeDorz.ts --network localhost
+npx hardhat ignition deploy ignition/modules/upgradeVesting.ts --network localhost
 
 upgrade:
 npx hardhat run scripts/upgradeDorz.ts --network localhost
@@ -29,23 +30,17 @@ npx hardhat ignition deploy ignition/modules/upgradeVesting.ts --network localho
 
 Deployed Addresses
 
-ProxyDorzModule#Dorz - 0x5a8E771b5D0B3d2e4d218478CB7C9029d00c4e5a
-ProxyDorzModule#TransparentUpgradeableProxy - 0xb11f9b33ee93B1f990a805fa68817A74e82A6891
-ProxyDorzModule#ProxyAdmin - 0x71535B5662df5B31f98a68B292707fDcf35b9F48
-DorzModule#Dorz - 0xb11f9b33ee93B1f990a805fa68817A74e82A6891
 
-ProxyVesting#Vesting - 0x9A7848b9E60C7619f162880c7CA5Cbca80998034
-ProxyVesting#TransparentUpgradeableProxy - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
-ProxyVesting#ProxyAdmin - 0x8b78072314017404e07eE2A026C796E278638c27
-VestingModule#Vesting - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
 
-DemoV2Module#Vesting2 - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
-Vesting2Module#Vesting2 - 0x322619fcCcc741880ee7071cBE4e877Fb919eCf8
+ProxyDorz#Dorz - 0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1
+ProxyDorz#TransparentUpgradeableProxy - 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44
+ProxyDorz#ProxyAdmin - 0xF1823bc4243b40423b8C8c3F6174e687a4C690b8
+DorzModule#Dorz - 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44
 
-DemoV3Module#Vesting3 - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
-Vesting3Module#Vesting3 - 0xBF4fD550c7BD3Cf6eC6A0b30bD4c8e603bbC16a8
+Dorz2Module#Dorz2 - 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44
+ProxyDorz2#Dorz2 - 0x4A679253410272dd5232B3Ff7cF5dbB88f295319
 
-Dorz2Module#Dorz2 - 0xCfaa0489f27b8A6980DeA5134f32516c755B7e63
-
-ProxyVesting4#Vesting4 - 0xEDBA386C67364084c5eCbb4C50422eEDCfB19374
-Vesting4Module#Vesting4 - 0xb2AA9bf762878462382A34eB4EC1f041E0071081
+ProxyVesting#Vesting - 0x09635F643e140090A9A8Dcd712eD6285858ceBef
+ProxyVesting#TransparentUpgradeableProxy - 0xc5a5C42992dECbae36851359345FE25997F5C42d
+ProxyVesting#ProxyAdmin - 0xf0D7de80A1C242fA3C738b083C422d65c6c7ABF1
+VestingModule#Vesting - 0xc5a5C42992dECbae36851359345FE25997F5C42d

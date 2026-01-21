@@ -15,15 +15,15 @@ async function main() {
     const proxyAdminContract = await ethers.getContractAt("ProxyAdmin", proxyAdmin);
     const v2 = await ethers.getContractAt("Dorz2", v2Implementation);
 
-    const encodedFunctionCall = v2.interface.encodeFunctionData("naik");
+    const encodedFunctionCall = v2.interface.encodeFunctionData("version");
     console.log("Upgrading to V2...");
     const upgradeTx = await proxyAdminContract.connect(currentAccount).upgradeAndCall(proxy, v2Implementation, encodedFunctionCall);
     await upgradeTx.wait();
     console.log("Upgraded to V2");
 
-    const v2Proxy = await ethers.getContractAt("Dorz2", proxy);
-    const currentValue = await v2Proxy.getNaik();
-    console.log("Current value after upgrade and call:", currentValue.toString());
+    //const v2Proxy = await ethers.getContractAt("Dorz2", proxy);
+    //const currentValue = await v2Proxy.getNaik();
+    //console.log("Current value after upgrade and call:", currentValue.toString());
 }
 
 main().catch((error) => {

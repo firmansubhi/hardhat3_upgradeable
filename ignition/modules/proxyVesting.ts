@@ -28,7 +28,7 @@ const vestingModule =  buildModule("VestingModule", (m) => {
 
   const vesting = m.contractAt("Vesting", proxyVest);
 
-  const dorzProxy = "0xb11f9b33ee93B1f990a805fa68817A74e82A6891";
+  const dorzProxy = "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44";
   const EthtoUsd = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
 
 

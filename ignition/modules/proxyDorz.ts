@@ -1,35 +1,35 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 
-const proxyDorzModule = buildModule("ProxyDorzModule", (m) => {
+const proxyDorz = buildModule("ProxyDorz", (m) => {
   const proxyAdminOwner = m.getAccount(0);
 
   const dorz = m.contract("Dorz");
 
-  const proxy = m.contract("TransparentUpgradeableProxy", [
+  const proxyDr = m.contract("TransparentUpgradeableProxy", [
 	dorz,
 	proxyAdminOwner,
 	"0x",
   ]);
 
   const proxyAdminAddress = m.readEventArgument(
-	proxy,
+	proxyDr,
 	"AdminChanged",
 	"newAdmin"
   );
 
-  const proxyAdmin = m.contractAt("ProxyAdmin", proxyAdminAddress);
+  const proxyAdminDr = m.contractAt("ProxyAdmin", proxyAdminAddress);
 
-  return { proxyAdmin, proxy };
+  return { implementation: dorz, proxyAdminDr, proxyDr };
 });
 
 const dorzModule =  buildModule("DorzModule", (m) => {
-  const { proxy, proxyAdmin } = m.useModule(proxyDorzModule);
+  const { proxyDr, proxyAdminDr } = m.useModule(proxyDorz);
 
-  const dorz = m.contractAt("Dorz", proxy);
+  const dorz = m.contractAt("Dorz", proxyDr);
   m.call(dorz, "initialize", []);
 
-  return { dorz, proxy, proxyAdmin };
+  return { dorz, proxyDr, proxyAdminDr };
 });
 
 export default dorzModule;

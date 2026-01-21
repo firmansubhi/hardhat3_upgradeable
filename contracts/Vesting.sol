@@ -1,19 +1,12 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
-
-import "./Dorz.sol";
-
-//import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-//import "@openzeppelin/contracts/utils/Strings.sol";
-//import "@openzeppelin/contracts/utils/math/SafeCast.sol";
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import {UUPSUpgradeable} from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
-// Assuming IProxyContract interface or the full contract is imported
-// import "./Dorz.sol";
+import "./Dorz.sol";
 
 contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     Dorz public myToken;
@@ -56,15 +49,6 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     function _authorizeUpgrade(
         address newImplementation
     ) internal override onlyOwner {}
-
-    //constructor(address tokenAddress) {
-    //    myToken = Dorz(tokenAddress);
-
-    //    //address chainlink for get ETH to USD price
-    //    dataFeed = AggregatorV3Interface(
-    //        0x694AA1769357215DE4FAC081bf1f309aDC325306
-    //    );
-    //}
 
     /**
      * @notice Allow the owner of the contract to withdraw ETH

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Compatible with OpenZeppelin Contracts ^5.5.0
-pragma solidity ^0.8.27;
+pragma solidity ^0.8.28;
 
 import {ERC20Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -18,8 +17,6 @@ contract Dorz is
         _disableInitializers();
     }
 
-    uint256 public upgradeIncrement;
-
     function initialize() public initializer {
         __ERC20_init("DORZ", "DORZ");
         __Ownable_init(msg.sender);
@@ -30,8 +27,4 @@ contract Dorz is
     function _authorizeUpgrade(
         address newImplementation
     ) internal override onlyOwner {}
-
-    function version() public pure returns (string memory) {
-        return "1.0.0";
-    }
 }

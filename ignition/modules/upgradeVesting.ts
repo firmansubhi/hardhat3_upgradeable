@@ -3,28 +3,28 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 import vestingModule from "./proxyVesting.js";
 
 
-const upgradeVesting = buildModule("ProxyVesting4", (m) => {
+const upgradeVesting = buildModule("ProxyVesting2", (m) => {
   const proxyAdminOwner = m.getAccount(0);
 
-  const { implementation, proxyVest, proxyAdminVest } = m.useModule(vestingModule);
+  const { proxyVest, proxyAdminVest } = m.useModule(vestingModule);
 
-  const vesting2 = m.contract("Vesting4");
+  const vesting = m.contract("Vesting2");
 
-  const encodedFunctionCall = m.encodeFunctionCall(vesting2, "naik", []);
+  const encodedFunctionCall = m.encodeFunctionCall(vesting, "updateAPR", []);
 
-  m.call(proxyAdminVest, "upgradeAndCall", [proxyVest, vesting2, encodedFunctionCall], {
+  m.call(proxyAdminVest, "upgradeAndCall", [proxyVest, vesting, encodedFunctionCall], {
     from: proxyAdminOwner,
   });
 
   return { proxyAdminVest, proxyVest };
 });
 
-const demoV2Module = buildModule("Vesting4Module", (m) => {
+const vestingUpgradeModule = buildModule("Vesting2Module", (m) => {
   const { proxyVest } = m.useModule(upgradeVesting);
 
-  const demo = m.contractAt("Vesting4", proxyVest);
+  const vesting = m.contractAt("Vesting2", proxyVest);
 
-  return { demo };
+  return { vesting };
 });
 
-export default demoV2Module;
+export default vestingUpgradeModule;
