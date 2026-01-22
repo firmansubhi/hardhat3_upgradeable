@@ -270,21 +270,28 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         uint256 qty = uint256(coinQty);
 
         uint256 vestingBalance = myToken.balanceOf(address(this));
-        require((vestingBalance >= qty), "Insufficient supply");
 
-        bool sent = myToken.transfer(msg.sender, qty);
-        require(sent, "System error, please try again later");
+        bool allowedBalance;
+        if (vestingBalance >= qty) {
+            allowedBalance = true;
+        } else {
+            allowedBalance = false;
+        }
+        require(allowedBalance, "Insufficient supply");
 
-        VestingData[id].coinClaimed = qty;
-        VestingData[id].claimTime = block.timestamp;
-        VestingData[id].claimStatus = true;
+        //bool sent = myToken.transfer(msg.sender, qty);
+        //require(sent, "System error, please try again later");
 
-        emit ClaimVest(
-            msg.sender,
-            qty,
-            VestingData[id].amount,
-            VestingData[id].aprAmount
-        );
+        //VestingData[id].coinClaimed = qty;
+        //VestingData[id].claimTime = block.timestamp;
+        //VestingData[id].claimStatus = true;
+
+        //emit ClaimVest(
+        //    msg.sender,
+        //    qty,
+        //    VestingData[id].amount,
+        //    VestingData[id].aprAmount
+        //);
 
         return qty;
     }
@@ -298,9 +305,27 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         //return (myBalance, myUsd);
     }
 
-    function teset(uint256 orderNumber) public view returns (uint256, uint256) {
-        (bool isExist, uint256 id) = getVestDataID(orderNumber);
-        require(isExist, "Your account is not valid");
+    function teset2() public pure returns (bool) {
+        return false;
+    }
+
+    function teset(
+        uint256 orderNumber
+    ) public view returns (uint256, uint256, bool) {
+        bool isExistrr = teset2();
+
+        //require(isExistrr, "kagak ade");
+        //if (!isExistrr) {
+        //revert("tidak ada ini sekarang");
+        require(isExistrr, "masih tidak ada");
+        //}
+
+        (, uint256 id) = getVestDataID(orderNumber);
+
+        //if (!isExist) {
+        //    revert InvalidVestData(id, id);
+        //}
+        //require(isExist, "Your account is not valid");
 
         uint256 vestingBalance = myToken.balanceOf(address(this));
 
@@ -309,6 +334,17 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         int256 coinQty = (total * myCoinPrice) / PRICE_FEED_DECIMAL;
         uint256 qty = uint256(coinQty);
 
-        return (vestingBalance, qty);
+        //require(vestingBalance > 0, "balance must be greater than zero");
+        //require(qty > 0, "QTY must be greater than zero");
+
+        bool allowed;
+
+        if (vestingBalance >= qty) {
+            allowed = true;
+        } else {
+            allowed = false;
+        }
+
+        return (vestingBalance, qty, allowed);
     }
 }

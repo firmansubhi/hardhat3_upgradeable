@@ -34,7 +34,7 @@ const vestingModule =  buildModule("VestingModule", (m) => {
   //mainnet
   //0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
 
-  const dorzProxy = "0xB581C9264f59BF0289fA76D61B2D0746dCE3C30D";
+  const dorzProxy = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853";
   const EthtoUsd = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
   const MyCoinperUSD = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
 
