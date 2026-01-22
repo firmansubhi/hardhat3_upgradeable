@@ -21,6 +21,8 @@
 
 .env
 
+/abi
+
 # Ignition modules
 ignition/deployments/chain-31337/
 ignition/deployments/chain-1337/

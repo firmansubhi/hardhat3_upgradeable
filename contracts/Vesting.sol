@@ -12,16 +12,23 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     Dorz public myToken;
 
     AggregatorV3Interface internal dataFeed;
+    AggregatorV3Interface internal dataFeedMyCoin;
 
     //price simulation for USD & ETH for testing
     int256 public usdEthPrice;
     int256 public myCoinUsdPrice;
 
-    //20% = 2000 basis points
+    //apr rate percentage
     int256 public APR_RATE;
 
     //variable to store the increment value of the vesting order
     uint256 public dataIncrement;
+
+    //decimal value of price feed aggregator
+    int256 public constant PRICE_FEED_DECIMAL = 10 ** 8;
+
+    //decimal value of percentage
+    int256 public constant PERCENTAGE_DECIMAL = 10 ** 2;
 
     receive() external payable {}
 
@@ -31,17 +38,21 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
     function initialize(
         address dorzProxy,
-        address EthtoUsd
+        address EthtoUsd,
+        address MyCoinperUSD
     ) public initializer {
         __Ownable_init(msg.sender);
 
-        usdEthPrice = 1000 * 10 ** 8; // 1 eth = 1000 usd
-        myCoinUsdPrice = 100 * 10 ** 8; // 1 usd = 100 dorz
-        APR_RATE = 2000;
+        usdEthPrice = 1000 * PRICE_FEED_DECIMAL; // 1 eth = 1000 usd
+        myCoinUsdPrice = 100 * PRICE_FEED_DECIMAL; // 1 usd = 100 dorz
+        APR_RATE = 20 * PERCENTAGE_DECIMAL;
         dataIncrement = 0;
 
         //address chainlink for get ETH to USD price
         dataFeed = AggregatorV3Interface(EthtoUsd);
+
+        //address chainlink for get DOrz to USD price
+        dataFeedMyCoin = AggregatorV3Interface(MyCoinperUSD);
 
         myToken = Dorz(dorzProxy);
     }
@@ -109,6 +120,9 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
      * @notice return OThree price per 1 USD
      */
     function getPriceMyCoinperUSD() public view returns (int256) {
+        //uncomment to return real price from aggregator
+        //(, int256 answer, , , ) = dataFeedMyCoin.latestRoundData();
+        //return answer;
         //return mock up data
         return myCoinUsdPrice;
     }
@@ -120,8 +134,9 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         require(ethQty > 0, "Vesting amount has to be greater than $0");
 
         int256 usdPrice = getPriceUSDperETH();
-        int256 val = (usdPrice * ethQty) / 1e8;
-        int256 apr = (((usdPrice * ethQty) * APR_RATE) / 10000) / 1e8;
+        int256 val = (usdPrice * ethQty) / PRICE_FEED_DECIMAL;
+        int256 apr = (((usdPrice * ethQty) * APR_RATE) /
+            (100 * PERCENTAGE_DECIMAL)) / PRICE_FEED_DECIMAL;
 
         return (val, apr);
     }
@@ -133,8 +148,8 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         require(usdQty > 0, "Vesting amount has to be greater than $0");
 
         int256 usdPrice = getPriceUSDperETH();
-        int256 val = (usdQty * 10 ** 8) / usdPrice;
-        int256 apr = ((usdQty * APR_RATE) / 10000);
+        int256 val = (usdQty * PRICE_FEED_DECIMAL) / usdPrice;
+        int256 apr = ((usdQty * APR_RATE) / (100 * PERCENTAGE_DECIMAL));
 
         return (val, apr);
     }
@@ -165,7 +180,7 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         int256 val = int256(msg.value);
         (int256 amount, int256 apr) = getUSDAmount(val);
-        uint256 lockUpTime = block.timestamp + 365 days;
+        uint256 lockUpTime = block.timestamp - 1 days;
         uint256 claimTime;
         uint256 coinClaimed;
 
@@ -251,7 +266,7 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         int256 total = VestingData[id].amount + VestingData[id].aprAmount;
         int256 myCoinPrice = getPriceMyCoinperUSD();
-        int256 coinQty = (total * myCoinPrice) / 1e8;
+        int256 coinQty = (total * myCoinPrice) / PRICE_FEED_DECIMAL;
         uint256 qty = uint256(coinQty);
 
         uint256 vestingBalance = myToken.balanceOf(address(this));
@@ -274,7 +289,26 @@ contract Vesting is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return qty;
     }
 
-    function version() public pure returns (string memory) {
-        return "1.0";
+    function getMyCoinUSD() public view returns (int256) {
+        uint256 myBalance = myToken.balanceOf(msg.sender);
+        int256 myCoinPrice = getPriceMyCoinperUSD();
+        int256 myUsd = (int256(myBalance) / myCoinPrice) / PERCENTAGE_DECIMAL;
+
+        return myUsd;
+        //return (myBalance, myUsd);
+    }
+
+    function teset(uint256 orderNumber) public view returns (uint256, uint256) {
+        (bool isExist, uint256 id) = getVestDataID(orderNumber);
+        require(isExist, "Your account is not valid");
+
+        uint256 vestingBalance = myToken.balanceOf(address(this));
+
+        int256 total = VestingData[id].amount + VestingData[id].aprAmount;
+        int256 myCoinPrice = getPriceMyCoinperUSD();
+        int256 coinQty = (total * myCoinPrice) / PRICE_FEED_DECIMAL;
+        uint256 qty = uint256(coinQty);
+
+        return (vestingBalance, qty);
     }
 }

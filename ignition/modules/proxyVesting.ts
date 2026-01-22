@@ -28,11 +28,18 @@ const vestingModule =  buildModule("VestingModule", (m) => {
 
   const vesting = m.contractAt("Vesting", proxyVest);
 
-  const dorzProxy = "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44";
+  //https://docs.chain.link/data-feeds/price-feeds/addresses?networkType=testnet&testnetSearch=ETH&testnetPage=1#Sepolia%20Testnet
+  //sepolia testnet
+  //0x694AA1769357215DE4FAC081bf1f309aDC325306
+  //mainnet
+  //0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
+
+  const dorzProxy = "0xB581C9264f59BF0289fA76D61B2D0746dCE3C30D";
   const EthtoUsd = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
+  const MyCoinperUSD = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
 
 
-  m.call(vesting, "initialize", [dorzProxy, EthtoUsd]);
+  m.call(vesting, "initialize", [dorzProxy, EthtoUsd, MyCoinperUSD]);
 
   return { implementation, vesting, proxyVest, proxyAdminVest };
 });

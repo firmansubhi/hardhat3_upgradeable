@@ -12,6 +12,7 @@ contract Vesting2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     Dorz public myToken;
 
     AggregatorV3Interface internal dataFeed;
+    AggregatorV3Interface internal dataFeedMyCoin;
 
     //price simulation for USD & ETH for testing
     int256 public usdEthPrice;
@@ -31,7 +32,8 @@ contract Vesting2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
     function initialize(
         address dorzProxy,
-        address EthtoUsd
+        address EthtoUsd,
+        address MyCoinperUSD
     ) public initializer {
         __Ownable_init(msg.sender);
 
@@ -42,6 +44,9 @@ contract Vesting2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         //address chainlink for get ETH to USD price
         dataFeed = AggregatorV3Interface(EthtoUsd);
+
+        //address chainlink for get DOrz to USD price
+        dataFeedMyCoin = AggregatorV3Interface(MyCoinperUSD);
 
         myToken = Dorz(dorzProxy);
     }
@@ -109,6 +114,9 @@ contract Vesting2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
      * @notice return OThree price per 1 USD
      */
     function getPriceMyCoinperUSD() public view returns (int256) {
+        //uncomment to return real price from aggregator
+        //(, int256 answer, , , ) = dataFeedMyCoin.latestRoundData();
+        //return answer;
         //return mock up data
         return myCoinUsdPrice;
     }
@@ -165,7 +173,7 @@ contract Vesting2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
         int256 val = int256(msg.value);
         (int256 amount, int256 apr) = getUSDAmount(val);
-        uint256 lockUpTime = block.timestamp - 1 days;
+        uint256 lockUpTime = block.timestamp + 365 days;
         uint256 claimTime;
         uint256 coinClaimed;
 

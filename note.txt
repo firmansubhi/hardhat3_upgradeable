@@ -30,17 +30,12 @@ npx hardhat ignition deploy ignition/modules/upgradeVesting.ts --network localho
 
 Deployed Addresses
 
+ProxyDorz#Dorz - 0x6e17A4d7d9D19b8b1bFBD57D88793021ac85B6d5
+ProxyDorz#TransparentUpgradeableProxy - 0x9b6BF33E7904097DdA0d9A07b55658f747F2a728
+ProxyDorz#ProxyAdmin - 0x2854d7A4b98058204BD96174f36d6034bA6E642f
+DorzModule#Dorz - 0x9b6BF33E7904097DdA0d9A07b55658f747F2a728
 
-
-ProxyDorz#Dorz - 0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1
-ProxyDorz#TransparentUpgradeableProxy - 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44
-ProxyDorz#ProxyAdmin - 0xF1823bc4243b40423b8C8c3F6174e687a4C690b8
-DorzModule#Dorz - 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44
-
-Dorz2Module#Dorz2 - 0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44
-ProxyDorz2#Dorz2 - 0x4A679253410272dd5232B3Ff7cF5dbB88f295319
-
-ProxyVesting#Vesting - 0x09635F643e140090A9A8Dcd712eD6285858ceBef
-ProxyVesting#TransparentUpgradeableProxy - 0xc5a5C42992dECbae36851359345FE25997F5C42d
-ProxyVesting#ProxyAdmin - 0xf0D7de80A1C242fA3C738b083C422d65c6c7ABF1
-VestingModule#Vesting - 0xc5a5C42992dECbae36851359345FE25997F5C42d
+ProxyVesting#Vesting - 0xff825139321bd8fB8b720BfFC5b9EfDB7d6e9AB3
+ProxyVesting#TransparentUpgradeableProxy - 0x44C8BF28219914D83894d1131dDFE1702Ac92f13
+ProxyVesting#ProxyAdmin - 0xaa0Dc74634710d89D617c1B292039ddbe3D0f6cD
+VestingModule#Vesting - 0x44C8BF28219914D83894d1131dDFE1702Ac92f13
